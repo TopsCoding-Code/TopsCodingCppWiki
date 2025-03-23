@@ -14,11 +14,11 @@
 
 ### 安装
 
-[Release Page](/wym-code/TopsCodingCpp/releases)
+[Release Page](./releases)
 
 #### 手动安装
 
-下载 `Source.zip` 并解压。请确保您已经安装了：PHP，MySQL 和解析器（如 Apache）并配置好 mysqli。
+下载 `source.zip` 并解压。请确保您已经安装了：PHP，MySQL 和解析器（如 Apache）并配置好 mysqli。
 
 然后解压到您的服务器根目录或者您想安装的目录（可能是 /var/www/html/topscodingcppwiki/），此时在目录里应该能看到多个 `.php` 文件。打开 `configure.php` 并编辑。
 
@@ -30,8 +30,8 @@ $db_hostname="localhost";
 $db_username="root";
 $db_password="password";
 $db_database="database";
+...
 ?>
-# HTML 部分
 ```
 
 我们推荐您使用 root 用户，否则请确保您的 `username@hostname`（`using password: yes`） 有权限登录。
@@ -39,13 +39,38 @@ $db_database="database";
 接下来进入 MySQL 命令行。
 
 ```sql
-create database topscodingcppwiki;
-use topscodingcppwiki;
-create table articles(
-id char(255) primary key not null unique,
-title char(255) not null,
-content text not null
+CREATE DATABASE topscodingcppwiki;
+USE topscodingcppwiki;
+CREATE TABLE articles (
+    id CHAR(255) NOT NULL,
+    title CHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT,
+    username CHAR(20) NOT NULL,
+    password CHAR(255) NOT NULL,
+    token CHAR(255) NOT NULL,
+    access ENUM('default', 'admin') DEFAULT 'default',
+    PRIMARY KEY (id)
 );
 ```
 
-未完成
+### 管理
+
+#### 设为管理员
+
+在 MySQL 终端，选中数据库，执行：
+
+```sql
+UPDATE users SET access = 'admin' WHERE id = <id>;
+```
+
+### 使用
+
+#### 登录/注册
+
+login.php/register.php
+
+目前不支持评论，而且没有 UI，正在开发中。。。
