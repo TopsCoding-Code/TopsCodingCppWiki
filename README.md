@@ -45,6 +45,7 @@ CREATE TABLE articles (
     id CHAR(255) NOT NULL,
     title CHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    comments json,
     PRIMARY KEY (id)
 );
 CREATE TABLE users (
